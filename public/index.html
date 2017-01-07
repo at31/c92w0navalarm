@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!-- Template by quackit.com -->
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>c92w0navalarm</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" type="text/css" />
+	<!--link rel="stylesheet" href="/css/chartist.min.css" type="text/css" /-->
+	<link rel="stylesheet" href="https://fullcalendar.io/js/fullcalendar-3.0.1/fullcalendar.css" type="text/css" />
+	
+
+
+</head>
+
+<body>
+	<div class="container">
+		 <div id="mapy" style="width: 100%; height: 400px"></div>
+		<div class="row">
+			<a href="#" class="btn btn-default" id="addevent">ADD EVENT</a>
+		</div>
+		<div class="row">
+		<div id='calendar'></div>	
+		</div>
+		
+		 <div id="map"></div>
+		
+
+		<main>
+			<div id="content" class="row">
+				<div class="innertube" class="col-md-12">
+					<h1>c92w0observer</h1>
+				</div>
+				<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist" id="restab">
+    
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+   
+  </div>
+
+</div>
+				<div class="innertube" id="place" class="col-md-12">
+
+				</div>
+			</div>
+		</main>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document" style="width:900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id="mbody" style="overflow-x:scroll;">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	</div>
+
+	<script id="template" type="text/x-handlebars-template">
+	<h2>{{datetime}}</h2>
+		
+		{{#array}}
+		<div class="panel panel-default" id="{{serverName}}-{{name}}">
+			<div class="panel-heading">
+				<h3 class="panel-title">Название - {{name}}</h3>
+				<h3 class="panel-title">Пользователь(посл.изменения) - {{usermod}}</h3>
+				<h3 class="panel-title">Дата последних изменений - {{lastmod}}</h3>
+				<!--canvas id="cnvs-{{serverName}}-{{name}}" height="100" width="200"></canvas-->
+			</div>
+			
+			<div class="panel-body">
+				<h3 >Количество изменений - {{diffsumm}}</h3>
+				<br>
+				<h3>Перечень изменений </h3> 
+				{{#history}}
+				<a href="#" id="{{link}}" data-server="{{serverName}}" class="historylink" style="margin:3px 5px 3px 5px;">{{lastmod}}</a>
+				{{/history}}
+				<br>
+				<h3>Последние изменения </h3> 
+				{{#if result.length}}<div class="table-responsive"> {{{html}}} </div>{{/if}}
+			</div>
+		</div>
+		{{/array}}
+	</script>
+	<!--script id="t0" type="text/x-handlebars-template">
+    	<p>{{data0}}</p>
+    	<div id="arrayplace"></div>	
+    </script>
+    <script id="t1" type="text/x-handlebars-template">
+    	<ul>
+    	{{#array}}
+    		<li>{{data}}
+    		{{#if subarray.length}}
+    		{{subarray[0].d0}}
+    		<ul>
+    			{{#subarray}}
+    			<li>{{d0}}</li>
+    			{{/subarray}}
+    		</ul>
+    		{{/if}}
+    		</li>
+    	{{/array}}
+    	</ul>
+    </script-->
+    
+    
+  	<script type="text/javascript" src="js/moment-with-locales.min.js"></script>  
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    
+    
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+    ymaps.ready(init);
+    var myMap;
+
+    function init(){     
+        myMap = new ymaps.Map("mapy", {
+            center: [50.59, 36.58],
+            zoom: 7
+        });
+   
+    
+    
+    $.ajax(
+	{
+		type: 'GET',
+		url: "pcht.json",
+		dataType: "json",
+		success: function(data) {
+			
+			//console.log(data);
+			
+			data.forEach(function(otd){
+				console.log(otd.latitude);
+				
+				var pmark = new ymaps.Placemark([otd.latitude, otd.longitude], { hintContent: otd.postalCode, balloonContent: otd.postalCode });
+				 myMap.geoObjects.add(pmark);
+			});
+			
+		},
+		//error: loadError
+	});
+    
+    }   
+    
+</script>
+ 
+    <script>
+      function initMap() {
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          scrollwheel: false,
+          zoom: 8
+        });
+      }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFHFKRN9bwMrmL8f88N8UPIPTDIBbymBo&callback=initMap"
+    async defer></script>  
+    
+ 
+	<script type="text/javascript" src="js/fullcalendar.js"></script>
+	
+	<script>
+		 
+		 $(document).ready(function() {
+		
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			selectable: true,
+      selectHelper: true,
+      editable: true,
+      eventLimit: true,
+      events: '/events.json',
+
+      /*select: function(start, end) {
+        console.log(start);
+      },*/
+      select: function(start, end, jsEvent, view, header) {
+		alert(start.format("MM/DD/YYYY hh:mm a") + " to " + end.format("MM/DD/YYYY hh:mm a") + " in view " + view.name+ header);
+		},
+
+			
+			
+			defaultDate: '2014-06-12',
+			defaultView: 'month',
+			editable: true,
+			events: [
+				{
+					title: 'All Day Event',
+					start: '2014-06-01'
+				},
+				
+			]
+		});
+		
+		
+		
+		$("#addevent").click(function(e){
+			console.log("AAAAAAAA");
+			var _d=moment("04-12-2016", "DD-MM-YYYY");
+			
+				$('#calendar').fullCalendar(
+					'renderEvent', 
+  				{
+						id: 999,
+					title: 'Repeating Event',
+					start: _d//'2014-06-16T16:00:00'
+				},
+  true
+				);
+		});
+		
+	});
+		 
+	</script>
+	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/Chart.min.js"></script>
+	<!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table-locale-all.min.js"></script-->
+	<script type="text/javascript" src="js/at31c92w0navalarm.js"></script>
+</body>
+
+</html>

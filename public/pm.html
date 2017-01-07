@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Template by quackit.com -->
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>почта карта 31</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" type="text/css" />
+
+	
+
+
+</head>
+
+<body>
+	<div class="container-fluid">
+	    <div class='row'>
+	        <div class='col-md-12'>
+	            <div id="mapy" style="width: 100%; min-height: 900px"></div>        
+	        </div>
+	    </div>
+		
+	</div>	
+
+
+
+
+    
+    
+  	<script type="text/javascript" src="js/moment-with-locales.min.js"></script>  
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    
+    
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+    ymaps.ready(init);
+    var myMap;
+
+    function init(){     
+        myMap = new ymaps.Map("mapy", {
+            center: [50.59, 36.58],
+            zoom: 10
+        },
+        {
+             buttonMaxWidth: 150
+        });
+   
+    
+    
+    $.ajax(
+	{
+		type: 'GET',
+		url: "pcht.json",
+		dataType: "json",
+		success: function(data) {
+			
+			//console.log(data);
+			
+			data.forEach(function(otd){
+				console.log(otd.latitude);
+				
+				var pmark = new ymaps.Placemark([otd.latitude, otd.longitude], {iconContent: otd.postalCode,iconCaption:otd.postalCode, hintContent: otd.postalCode, balloonContent: otd.postalCode },{ preset: 'islands#blackStretchyIcon' });
+				 myMap.geoObjects.add(pmark);
+			});
+			
+		},
+		//error: loadError
+	});
+    
+    }   
+    
+</script>
+ 
+    <script>
+      function initMap() {
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          scrollwheel: false,
+          zoom: 8
+        });
+      }
+
+    </script>
+   
+	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "c92w0",
+  "description": "",
+  "main": "",
+  "authors": [
+    "atcrew3000 <atcrew3@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chartist": "^0.9.8",
+    "chart.js": "^2.3.0",
+    "fullcalendar": "^3.0.1"
+  }
+}
